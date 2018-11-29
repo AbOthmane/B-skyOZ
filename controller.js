@@ -6,9 +6,8 @@ app.controller('AppController', function($scope){
 
 });
 
-var map;
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
         center: { // 地図の中心を指定
             lat: 35.658034, // 緯度
             lng: 139.701636 // 経度
@@ -224,4 +223,9 @@ function initMap() {
           ]
     });
     
+    var latlng = new google.maps.LatLng(35.691638, 139.704616);
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map
+    });
 }
