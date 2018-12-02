@@ -9,10 +9,19 @@
         <script type="text/javascript" src="controller.js"></script>
         <link rel="stylesheet" type="text/css" href="cafemap.css">
     </head>
-<body ng-controller="AppController">
+<body>
 
     <a href="#" class = "button">Stars</a>
     <div id="map"></div>
 
+    <script>
+        var counter = 0;
+        d3.select(".button")
+            .on("click", function(d){
+                
+                setMarker(cafedata[0])
+                counter++;
+            })
+    </script>
 
 </body></html>

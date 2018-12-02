@@ -1,13 +1,8 @@
 var app = angular.module('App', []);
 
-app.controller('AppController', function($scope){
-//ここでModelとのやりとりなど。
-
-
-});
-
+var map;
 function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: { // 地図の中心を指定
             lat: 35.658034, // 緯度
             lng: 139.701636 // 経度
@@ -222,10 +217,52 @@ function initMap() {
             }
           ]
     });
-    
-    var latlng = new google.maps.LatLng(35.691638, 139.704616);
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map
-    });
 }
+
+var cafedata;
+d3.csv("dataset.csv").then(function(d){
+    cafedata  = d;
+    console.log(cafedata);
+})
+
+
+
+
+function setMarker(data){
+    var pixelOffset = new google.maps.Size(0, -5);
+    var lat = Number(data.Lat)+0.1*Math.random()
+    var lng = Number(data.Lng)+0.1*Math.random()
+    var latlng = new google.maps.LatLng(lat, lng);
+    var marker = new google.maps.Marker({ // マーカーの追加
+        position: latlng, // マーカーを立てる位置を指定
+        map: map,
+        icon: {
+          fillColor: "#FF0000",
+          fillOpacity: 1,
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 3,
+          strokeColor: "FFFFFF",
+          strokeWeight: 0
+        },
+    })
+
+    marker.addListener("mouseover", function(){
+      hoverinfo = new google.maps.InfoWindow({
+        map: map,
+        content: "<p>lat: "+ lat +"</p><p>lng: "+ lng +"</p>",
+        noSuppress: true,
+        pixelOffset: pixelOffset,
+      });
+      
+      console.log();
+      hoverinfo.setPosition(latlng);
+
+      marker.addListener("mouseout", function(){
+        if(hoverinfo){
+          hoverinfo.close();
+        }
+      })
+    })
+}
+    
+
