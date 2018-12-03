@@ -1,5 +1,5 @@
 def mecab_analysis(text):
-    t = mc.Tagger('-Ochasen -d /usr/local/Cellar/mecab/0.996/lib/mecab/dic/mecab-ipadic-neologd/')
+    t = mc.Tagger('-Ochasen')
     enc_text = text.encode('utf-8')
     node = t.parseToNode(enc_text)
     output = []

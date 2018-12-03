@@ -78,8 +78,12 @@ for location,location_path in Locations.items():
                 except:
                     print("[Error parsing rank/budgets]")
 
+
+
                 Konzatsu = 0
                 
+
+
 
                 df.loc[indice] = [location,Name,Rst_Page,Rank,Lunch_Budget,Dinner_Budget,Lat,Lon,Open_Date,Konzatsu]
 
