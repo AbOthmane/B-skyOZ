@@ -1,6 +1,7 @@
 var app = angular.module('App', []);
 
 var map;
+var markerArray;
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { // 地図の中心を指定
@@ -217,44 +218,58 @@ function initMap() {
             }
           ]
     });
+    markerArray = new google.maps.MVCArray()
 }
 
 var cafedata;
-d3.csv("dataset.csv").then(function(d){
+d3.csv("data_1.csv").then(function(d){
     cafedata  = d;
-    console.log(cafedata);
-})
+    console.log(cafedata)
+});
 
 
+function contents(content,rank,lunch_budget){
+  if(content=="Rank")return d3.interpolateOrRd((rank-1)/4);
+  if(content=="Lunch_Budget"){
+    if(lunch_budget == " ～￥999")return d3.interpolateOrRd(0.2);
+    if(lunch_budget == "￥1,000～￥1,999")return d3.interpolateOrRd(0.5);
+    if(lunch_budget == "-")return "grey";
+  }
+}
 
-
-function setMarker(data){
+function setMarker(data, content){
     var pixelOffset = new google.maps.Size(0, -5);
-    var lat = Number(data.Lat)+0.1*Math.random()
-    var lng = Number(data.Lng)+0.1*Math.random()
+    var lat = Number(data.Lat)//+0.15*Math.random() 
+    var lng = Number(data.Lng)//+0.15*Math.random() 
+    var rank = Number(data.Rank)//+4*Math.random()-2
+    var lunch_budget = data.Lunch_Budget
+    var open = data.Open_Date.split("-")
     var latlng = new google.maps.LatLng(lat, lng);
     var marker = new google.maps.Marker({ // マーカーの追加
         position: latlng, // マーカーを立てる位置を指定
         map: map,
         icon: {
-          fillColor: "#FF0000",
+          fillColor: contents(content,rank,lunch_budget),
           fillOpacity: 1,
           path: google.maps.SymbolPath.CIRCLE,
-          scale: 3,
-          strokeColor: "FFFFFF",
-          strokeWeight: 0
+          scale: 5,
+          strokeWeight: 0.2,
         },
     })
 
     marker.addListener("mouseover", function(){
       hoverinfo = new google.maps.InfoWindow({
         map: map,
-        content: "<p>lat: "+ lat +"</p><p>lng: "+ lng +"</p>",
+        content: "<p>name: "+ data.Name +"</p>"
+                  +"<p>rank: "+ rank.toFixed(2) +"</p>"
+                  +"<p>open: "+ open[0]+"-"+open[1]+"-"+open[2] +"</p>"
+                  +"<p>lunch_budget: "+ lunch_budget +"</p>",
         noSuppress: true,
         pixelOffset: pixelOffset,
       });
       
-      console.log();
+      console.log(typeof(open));
+
       hoverinfo.setPosition(latlng);
 
       marker.addListener("mouseout", function(){
@@ -263,6 +278,8 @@ function setMarker(data){
         }
       })
     })
+
+    markerArray.push(marker)
 }
     
 

@@ -9,18 +9,41 @@
         <script type="text/javascript" src="controller.js"></script>
         <link rel="stylesheet" type="text/css" href="cafemap.css">
     </head>
-<body>
+ 
 
-    <a href="#" class = "button">Stars</a>
-    <div id="map"></div>
+<body>
+    <div id="header">
+        <a href="#" class="button" id="rating">Rating</a>
+        <a href="#" class="button" id="budget">Budget</a>
+    </div>
+    <div id="main">
+        <div id="left-header">
+            <a href="#" class="button" id="open">Open<br>Day</a>
+            <a href="#" class="button" id="congestion">Congestion<br>Degree</a>
+        </div>
+    
+        <div id="map"></div>
+    </div>
 
     <script>
-        var counter = 0;
-        d3.select(".button")
+        d3.select("#rating")
             .on("click", function(d){
-                
-                setMarker(cafedata[0])
-                counter++;
+                markerArray.forEach(function(marker){
+                    marker.setMap(null);
+                })
+                for (var i=0; i<cafedata.length; i++){
+                    setMarker(cafedata[i],"Rank")
+                }
+            })
+
+        d3.select("#budget")
+            .on("click", function(d){
+                markerArray.forEach(function(marker){
+                    marker.setMap(null);
+                })
+                for (var i=0; i<cafedata.length; i++){
+                    setMarker(cafedata[i],"Lunch_Budget")
+                }
             })
     </script>
 

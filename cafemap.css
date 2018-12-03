@@ -1,16 +1,55 @@
+#header {
+    display: flex;
+    height: 150px;
+    background-color: #f1b46e;
+}
+
+
+#main {
+    display: flex;
+}
+
+#left-header {
+    height: 600px;
+    background-color: #f1b46e;
+    width: 300px;
+}
+
 #map {
-    width: 600px;
+    width: calc(100% - 300px);
     height: 600px;
     margin: 5px;
-    float: left;
 }
 
 .button {
+    text-align: center;
     padding: 0.5em 1em;
     margin: 5px;
     text-decoration: none;
     background: #f1b46e;/*ボタン色*/
     color: #FFF;
+    border: solid;
+    border-color: #FFF;
+    border-width: 1px;
     border-radius: 3px;
+
+    transition: background 0.3s,
+                color 0.3s;
+}
+
+.button:hover {
+    background: #FFF;
+    color: #f1b46e;
+}
+
+#rating, #budget {
+    width: 100px;
+    height: 30px;
+}
+
+#open, #congestion {
+    width: 100px;
+    height: 50px;
+    display: block;
     float: left;
 }
