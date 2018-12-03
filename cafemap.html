@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app = 'App'>
+    <head>
+        <meta charset="utf-8">
+        <title>CafeMap</title>
+        <script src="./lib/d3.js" charset="utf-8"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC1Tkn2no27id0ILNHD1glfyBI2elzAmI&callback=initMap&libraries=drawing,visualization" async defer></script>
+        <script type="text/javascript" src="controller.js"></script>
+        <link rel="stylesheet" type="text/css" href="cafemap.css">
+    </head>
+ 
+
+<body>
+    <div id="header">
+        <a href="#" class="button" id="rating">Rating</a>
+        <a href="#" class="button" id="budget">Budget</a>
+    </div>
+    <div id="main">
+        <div id="left-header">
+            <a href="#" class="button" id="open">Open<br>Day</a>
+            <a href="#" class="button" id="congestion">Congestion<br>Degree</a>
+            <div class="slider"></div>>
+        </div>
+    
+        <div id="map"></div>
+    </div>
+
+    <script>
+        d3.select("#rating")
+            .on("click", function(d){
+                markerArray.forEach(function(marker){
+                    marker.setMap(null);
+                })
+                for (var i=0; i<cafedata.length; i++){
+                    setMarker(cafedata[i],"Rank")
+                }
+            })
+
+        d3.select("#budget")
+            .on("click", function(d){
+                markerArray.forEach(function(marker){
+                    marker.setMap(null);
+                })
+                for (var i=0; i<cafedata.length; i++){
+                    setMarker(cafedata[i],"Lunch_Budget")
+                }
+            })
+    </script>
+
+</body></html>
