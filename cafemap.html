@@ -14,23 +14,28 @@
 
 <body>
     <div id="header">
-        <a href="#" class="button" id="rating">Rating</a>
-        <a href="#" class="button" id="budget">Budget</a>
+        <div ng-controller="AppCtrl" ng-cloak>
+            <md-button id="rating" ng-click="setRank()">Rating</md-button>
+            <md-button id="budget" ng-click="setBudget()">Budget</md-button>
+        </div>
     </div>
     <div id="main">
         <div id="left-header">
-            <a href="#" class="button" id="open">Open<br>Day</a>
-            <a href="#" class="button" id="congestion">Congestion<br>Degree</a>
-            <div ng-controller="AppCtrl" ng-cloak>
-                <md-content layout="row" layout-padding>
-                    <md-slider-container flex>
+            <div id="open-content">
+                <md-button id="open">Open<br>Day</md-button>
+                <div ng-controller="AppCtrl" ng-cloak id="open-slider">
+                    <md-slider-container>
+                        <md-slider ng-model="open" min="0" max="1000" aria-label="open-day" id="slider" md-vertical md-range></md-slider>
                         <md-input-container>
                             <input flex type="number" ng-model="open" aria-label="open-day" aria-controls="slider">
                         </md-input-container>
-                        <md-slider ng-model="open" min="0" max="100" aria-label="open-day" id="slider" md-vertical md-range></md-slider>
                     </md-slider-container>
-                </md-content>
+                </div>
             </div>
+            <div id="congestion-content">
+                 <md-button id="congestion">Congestion<br>Degree</md-button>
+            </div>
+            
         </div> 
         <div id="map"></div>
     </div>
@@ -49,28 +54,27 @@
     <script>
         var app = angular.module('App', ["ngMaterial", "ngAnimate"])
         .controller("AppCtrl", function($scope){
-        $scope.open = 0;
-        });
-        
-        d3.select("#rating")
-            .on("click", function(d){
+            $scope.open = 0;
+            $scope.setRank = function(){
+                console.log("clicked");
                 markerArray.forEach(function(marker){
                     marker.setMap(null);
                 })
                 for (var i=0; i<cafedata.length; i++){
                     setMarker(cafedata[i],"Rank")
                 }
-            })
+            };
 
-        d3.select("#budget")
-            .on("click", function(d){
+            $scope.setBudget = function(){
                 markerArray.forEach(function(marker){
                     marker.setMap(null);
                 })
                 for (var i=0; i<cafedata.length; i++){
                     setMarker(cafedata[i],"Lunch_Budget")
                 }
-            })
+            }
+        });
+        
     </script>
 
 </body></html>
