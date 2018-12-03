@@ -1,7 +1,6 @@
-var app = angular.module('App', []);
-
 var map;
 var markerArray;
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { // 地図の中心を指定
@@ -224,8 +223,8 @@ function initMap() {
 var cafedata;
 d3.csv("data_1.csv").then(function(d){
     cafedata  = d;
-    console.log(cafedata)
 });
+
 
 
 function contents(content,rank,lunch_budget){
