@@ -243,7 +243,11 @@ function setMarker(data, content){
     var lng = Number(data.Lng)//+0.15*Math.random() 
     var rank = Number(data.Rank)//+4*Math.random()-2
     var lunch_budget = data.Lunch_Budget
-    var open = data.Open_Date.split("-")
+    var open;
+    if (data.Open_Date == "0"){
+      open = "-"
+    }
+    else open = data.Open_Date;
     var latlng = new google.maps.LatLng(lat, lng);
     var marker = new google.maps.Marker({ // マーカーの追加
         position: latlng, // マーカーを立てる位置を指定
@@ -262,7 +266,7 @@ function setMarker(data, content){
         map: map,
         content: "<p>name: "+ data.Name +"</p>"
                   +"<p>rank: "+ rank.toFixed(2) +"</p>"
-                  +"<p>open: "+ open[0]+"-"+open[1]+"-"+open[2] +"</p>"
+                  +"<p>open: "+ open+"</p>"
                   +"<p>lunch_budget: "+ lunch_budget +"</p>",
         noSuppress: true,
         pixelOffset: pixelOffset,
